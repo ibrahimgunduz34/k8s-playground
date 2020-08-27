@@ -1,0 +1,8 @@
+---
+- name: Check if master node is already initialized
+  stat:
+    path: /etc/kubernetes/admin.conf
+  register: kubeadm_config_file
+- name: Initialize master kubernetes node
+  command: kubeadm init
+  when: "kubeadm_config_file.stat.exists == false"

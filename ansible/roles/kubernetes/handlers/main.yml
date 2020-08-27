@@ -1,0 +1,6 @@
+---
+- name: Ensure Kubernetes service started
+  service:
+    name: kubelet
+    enabled: yes
+    state: started

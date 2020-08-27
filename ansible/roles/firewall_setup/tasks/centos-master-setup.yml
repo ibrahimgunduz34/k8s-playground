@@ -1,0 +1,29 @@
+---
+- name: Ensure the firewall service is started
+  systemd:
+    name: firewalld
+    state: started
+    enabled: yes
+- name: Setup firewall for the master node
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+  loop:
+    - 6443/tcp
+    - 2379-2380/tcp
+    - 10250/tcp
+    - 10251/tcp
+    - 10252/tcp
+    - 10255/tcp
+- name: Reload firewall configuration
+  raw: "firewall-cmd --reload"
+- name: Enable Bridge Netfilter module
+  command: modprobe br_netfilter
+- name: update kernel settings
+  sysctl:
+    name: net.bridge.bridge-nf-call-iptables
+    value: "1"
+    sysctl_set: yes
+    state: present
+    reload: yes

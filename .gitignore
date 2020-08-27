@@ -1,0 +1,4 @@
+vagrant/.vagrant
+*.tmp
+*.swo
+*.swp

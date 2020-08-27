@@ -1,0 +1,24 @@
+---
+- name: Check if the user configuration exists
+  stat:
+    path: /root/.kube
+  register: kube_config_dir
+- name: Create Kubernetes configuration folder if not exists
+  file:
+    path: /root/.kube
+    state: directory
+    mode: 0755
+    group: root
+    owner: root
+  when: "kube_config_dir.stat.exists == false"
+- name: Setup kubernetes client config
+  copy:
+    remote_src: yes
+    src: /etc/kubernetes/admin.conf
+    dest: /root/.kube/config
+- name: Create kubernetes version hash
+  raw: kubectl version | base64 | tr -d '\n'
+  register: kube_version_hash
+- name: setup kubernetes pod network
+  command: "kubectl apply -f https://cloud.weave.works/k8s/net?k8s-version={{ kube_version_hash.stdout }}"
+

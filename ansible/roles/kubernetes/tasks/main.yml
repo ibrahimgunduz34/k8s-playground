@@ -1,0 +1,14 @@
+---
+- name: load distribution based variables
+  include_vars: "{{  item }}"
+  with_first_found:
+    - "{{ ansible_distribution | lower }}.yml"
+  tags: vars
+- name: Load distribution based common setup
+  include: "{{ ansible_distribution | lower }}-common-setup.yml"
+- name: Load distribution based master setup
+  include: "{{ ansible_distribution | lower }}-master-setup.yml"
+  when: "master_group in group_names"
+- name: Load distribution based master post-setup
+  include: "{{ ansible_distribution | lower }}-master-post-setup.yml"
+  when: "master_group in group_names"

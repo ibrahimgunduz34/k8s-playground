@@ -1,0 +1,9 @@
+---
+- name: Disable swap in current session
+  command: swapoff -a
+- name: Disable swap permanently
+  raw: sed -i '/swap/d' /etc/fstab
+- name: Disable selinux in current session
+  command: setenforce 0
+- name: Disable selinux permanently
+  raw: sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux

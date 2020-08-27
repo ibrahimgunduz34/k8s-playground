@@ -1,0 +1,4 @@
+galaxy_info:
+  author: Ibrahim Gunduz <ibrahimgunduz34@gmail.com>
+  description: Ansible docker role
+  min_ansible_version: 2.9

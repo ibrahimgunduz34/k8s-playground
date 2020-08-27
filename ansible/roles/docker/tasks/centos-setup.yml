@@ -1,0 +1,39 @@
+---
+- name: Uninstall old versions if exists
+  package:
+    name:
+      - docker
+      - docker-client
+      - docker-client-latest
+      - docker-common
+      - docker-latest
+      - docker-latest-logrotate
+      - docker-logrotate
+      - docker-engine
+    state: absent
+- name: Add Docker's official GPG key
+  get_url:
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docker-ce.repo
+    mode: 0644
+- name: Install Docker components
+  yum:
+    name:
+      - "device-mapper-persistent-data-{{ device_mapper_persistent_data_version }}"
+      - "lvm2-{{ lvm2_version }}"
+      - containerd.io-{{ containerd_io_version }}
+      - docker-ce-{{ docker_ce_version }}
+      - docker-ce-cli-{{ docker_ce_cli_version }}
+    state: present
+- name: start docker service
+  systemd:
+    name: docker
+    enabled: yes
+    daemon_reload: yes
+    state: started
+- name: Update daemon configuration
+  template:
+    src: templates/daemon.json.j2
+    dest: /etc/docker/daemon.json
+    owner: root
+  notify: restart docker service

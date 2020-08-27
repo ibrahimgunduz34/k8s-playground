@@ -1,0 +1,4 @@
+---
+# kubelet_version: 1.19.0-0
+kubeadm_version: 1.19.0-0
+# kubectl_version: 1.19.0-0

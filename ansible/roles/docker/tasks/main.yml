@@ -1,0 +1,11 @@
+---
+- name: load distribution based variables
+  include_vars: "{{  item }}"
+  with_first_found:
+    - "{{ ansible_distribution | lower }}.yml"
+  tags: vars
+- name: Load distribution based setup
+  include: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution | lower }}-setup.yml"
+  tags: tasks
