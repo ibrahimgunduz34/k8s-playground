@@ -24,8 +24,13 @@ $ ansible-playbook -i inventory.yml provision-dev.yml
 * Use generic group names instead of environment specific group names for the roles regarding multi-node setup.
 * Make the kubernetes works with multi-slave and single master at the first phase
 * Put an example project into repo that uses external services db, cache, queue broker etc. with kubernetes deployment configuration
+	* Deployment configuration should create multiple instance of the application container
+	* The application should start with delay
+	* The deployment configuration should take care of application instances' health-check
+	* The configuration should allow load balancing between the application instances and provide an endpoint that external users can access the application
 * Make the kubernetes works with multi-master and slave nodes.
 * Put some automated tests to simulate and test downtime scenarios of master or slave nodes.
+
 
 ## Credits:
 * [https://www.tecmint.com/install-a-kubernetes-cluster-on-centos-8/](https://www.tecmint.com/install-a-kubernetes-cluster-on-centos-8/)
