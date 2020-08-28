@@ -1,4 +1,4 @@
-# Kubernetes Demo Environment With Master/Slave Nodes
+# Kubernetes Demo Environment With Master/Slave Nodes (Work In Progress)
 
 ## Prerequisities
 * Virtualbox
