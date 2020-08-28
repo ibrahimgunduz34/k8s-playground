@@ -14,12 +14,3 @@
     # TODO: Remove the hardcoded group names
     - { role: firewall_setup, master_group: k8s_dev }
     - { role: kubernetes, master_group: k8s_dev }
-
-    # docs
-    # https://www.tecmint.com/install-a-kubernetes-cluster-on-centos-8/
-    # tc not found issue
-    # https://stackoverflow.com/questions/59653331/kubernetes-centos-8-tc-command-missing-impact
-    # - kubernetes
-  # tasks:
-    # - name: Setup firewall
-    #   include: "ufw_{{ansible_distribution}}_{{ ufw_setup }}.yml"
