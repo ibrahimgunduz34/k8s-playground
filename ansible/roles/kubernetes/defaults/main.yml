@@ -1,0 +1,2 @@
+---
+kube_home: '{{ ansible_env.HOME }}/.kube'

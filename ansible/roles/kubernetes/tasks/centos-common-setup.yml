@@ -14,8 +14,7 @@
   yum:
     name:
       - iproute-tc
-      # - "kubeadm-{{ kubeadm_version }}"
-      - "kubeadm"
+      - "kubeadm-{{ kubeadm_version }}"
 - name: Ensure kubelet is started
   systemd:
     name: kubelet

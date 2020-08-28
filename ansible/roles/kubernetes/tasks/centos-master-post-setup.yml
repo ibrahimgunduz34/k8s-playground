@@ -1,21 +1,21 @@
 ---
 - name: Check if the user configuration exists
   stat:
-    path: /root/.kube
+    path: "{{ kube_home }}"
   register: kube_config_dir
 - name: Create Kubernetes configuration folder if not exists
   file:
-    path: /root/.kube
+    path: '{{ kube_home }}'
     state: directory
     mode: 0755
-    group: root
-    owner: root
   when: "kube_config_dir.stat.exists == false"
 - name: Setup kubernetes client config
   copy:
     remote_src: yes
     src: /etc/kubernetes/admin.conf
-    dest: /root/.kube/config
+    dest: '{{ kube_home }}/config'
+# - name: Update configuration owner
+#   shell: chown $(id -u):$(id -g) {{ kube_home }}/config
 - name: Create kubernetes version hash
   raw: kubectl version | base64 | tr -d '\n'
   register: kube_version_hash
