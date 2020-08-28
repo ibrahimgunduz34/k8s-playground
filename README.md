@@ -20,6 +20,23 @@ Vagrant would create two machines as master and slave with the following IP addr
 $ ansible-playbook -i inventory.yml provision-dev.yml
 ```
 
+# How To Access Kubernetes
+* Goto vagrant folder and connect the vm via ssh. (After multi-slave imp. you should connect by specifying the vm name)
+```
+$ vagrant ssh
+```
+
+* Call `kubectl` command with `sudo`
+```
+$ sudo kubectl get nodes
+```
+
+You should see a result like the following:
+```
+NAME                    STATUS   ROLES    AGE   VERSION
+localhost.localdomain   Ready    master   49m   v1.19.0
+```
+
 ## TODOs
 * ~~Use generic group names instead of environment specific group names for the roles regarding multi-node setup.~~
 * Make the kubernetes works with multi-slave and single master at the first phase
