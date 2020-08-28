@@ -1,4 +1,5 @@
-# Kubernetes Demo Environment With Master/Slave Nodes (Work In Progress)
+# Kubernetes Demo Environment With Master/Slave Nodes
+Work in progress - It's a playground environment with k8s master/slave nodes. You can simply create vms with vagrant and provision them by the ansible-playbook in the repository.
 
 ## Prerequisities
 * Virtualbox
