@@ -5,7 +5,7 @@
 * Vagrant
 * Ansible
 
-# Setup
+## Setup
 * Goto `vagrant` folder and start the machines by the following command
 ```shell
 $ vagrant up
@@ -19,3 +19,7 @@ Vagrant would create two machines as master and slave with the following IP addr
 $ ansible-playbook -i inventory.yml provision-dev.yml
 ```
 
+## Credits:
+* [https://www.tecmint.com/install-a-kubernetes-cluster-on-centos-8/](https://www.tecmint.com/install-a-kubernetes-cluster-on-centos-8/)
+* [https://stackoverflow.com/questions/59653331/kubernetes-centos-8-tc-command-missing-impact](https://stackoverflow.com/questions/59653331/kubernetes-centos-8-tc-command-missing-impact)
+* [https://phoenixnap.com/kb/how-to-install-kubernetes-on-centos](https://phoenixnap.com/kb/how-to-install-kubernetes-on-centos)
