@@ -20,6 +20,13 @@ Vagrant would create two machines as master and slave with the following IP addr
 $ ansible-playbook -i inventory.yml provision-dev.yml
 ```
 
+## TODOs
+* Use generic group names instead of environment specific group names for the roles regarding multi-node setup.
+* Make the kubernetes works with multi-slave and single master at the first phase
+* Put an example project into repo that uses external services db, cache, queue broker etc. with kubernetes deployment configuration
+* Make the kubernetes works with multi-master and slave nodes.
+* Put some automated tests to simulate and test downtime scenarios of master or slave nodes.
+
 ## Credits:
 * [https://www.tecmint.com/install-a-kubernetes-cluster-on-centos-8/](https://www.tecmint.com/install-a-kubernetes-cluster-on-centos-8/)
 * [https://stackoverflow.com/questions/59653331/kubernetes-centos-8-tc-command-missing-impact](https://stackoverflow.com/questions/59653331/kubernetes-centos-8-tc-command-missing-impact)
