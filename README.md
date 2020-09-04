@@ -37,7 +37,8 @@ EOF
 
 $ scp -o StrictHostKeyChecking=no \
 -i .vagrant/machines/default/virtualbox/private_key \
-vagrant@192.168.20.10:/tmp/kube-config.conf ~/.kube/config && vagrant ssh -c "rm /tmp/kube-config.conf"
+vagrant@192.168.20.10:/tmp/kube-config.conf ~/.kube/config &&\
+ vagrant ssh -c "rm /tmp/kube-config.conf"
 ```
 
 * Call `kubectl` command
