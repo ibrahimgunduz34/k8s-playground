@@ -21,12 +21,26 @@ $ ansible-playbook -i inventory.yml provision-dev.yml
 ```
 
 # How To Access Kubernetes
-* Goto vagrant folder and connect the vm via ssh. (After multi-slave imp. you should connect by specifying the vm name)
+* Create `.kube` directory under your user home directory
+
 ```
-$ vagrant ssh
+mkdir -p ~/.kube
 ```
 
-* Call `kubectl` command with `sudo`
+* Goto `vagrant` directory and copy the kubernetes configuration from the vm to the folder you created under your home directory.
+
+```
+$ vagrant ssh <<EOF
+sudo cp /etc/kubernetes/admin.conf /tmp/kube-config.conf &&\
+sudo chown vagrant:vagrant /tmp/kube-config.conf
+EOF
+
+$ scp -o StrictHostKeyChecking=no \
+-i .vagrant/machines/default/virtualbox/private_key \
+vagrant@192.168.20.10:/tmp/kube-config.conf ~/.kube/config && vagrant ssh -c "rm /tmp/kube-config.conf"
+```
+
+* Call `kubectl` command
 ```
 $ sudo kubectl get nodes
 ```
@@ -39,7 +53,7 @@ localhost.localdomain   Ready    master   49m   v1.19.0
 
 ## TODOs
 * ~~Use generic group names instead of environment specific group names for the roles regarding multi-node setup.~~
-* Learn how to access the cluster from remote and update the document.
+* ~~Learn how to access the cluster from remote and update the document.~~
 * Make the kubernetes works with multi-slave and single master at the first phase
 * Put an example project into repo that uses external services db, cache, queue broker etc. with kubernetes deployment configuration
 	* Deployment configuration should create multiple instance of the application container
