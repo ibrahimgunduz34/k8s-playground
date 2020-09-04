@@ -56,6 +56,10 @@ localhost.localdomain   Ready    master   49m   v1.19.0
 * ~~Use generic group names instead of environment specific group names for the roles regarding multi-node setup.~~
 * ~~Learn how to access the cluster from remote and update the document.~~
 * Make the kubernetes works with multi-slave and single master at the first phase
+	* ~~Update the vagrant configuration to create a second vm in order to use it as slave kubernetes node~~
+	* ~~Update ansible scripts to make the required changes on the vm OS' and install common components to the slave too~~
+	* ~~Update firewall rules for the slave node by ansible~~
+	* Register slave kubernetes node to the master
 * Put an example project into repo that uses external services db, cache, queue broker etc. with kubernetes deployment configuration
 	* Deployment configuration should create multiple instance of the application container
 	* The application should start with delay
