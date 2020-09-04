@@ -11,6 +11,5 @@
   roles:
     - os_common
     - docker
-    # TODO: Remove the hardcoded group names
     - { role: firewall_setup, master_group: k8s_master }
     - { role: kubernetes, master_group: k8s_master }

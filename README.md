@@ -39,6 +39,7 @@ localhost.localdomain   Ready    master   49m   v1.19.0
 
 ## TODOs
 * ~~Use generic group names instead of environment specific group names for the roles regarding multi-node setup.~~
+* Learn how to access the cluster from remote and update the document.
 * Make the kubernetes works with multi-slave and single master at the first phase
 * Put an example project into repo that uses external services db, cache, queue broker etc. with kubernetes deployment configuration
 	* Deployment configuration should create multiple instance of the application container
