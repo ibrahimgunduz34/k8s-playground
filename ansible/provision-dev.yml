@@ -11,5 +11,5 @@
   roles:
     - os_common
     - docker
-    - { role: firewall_setup, master_group: k8s_master }
-    - { role: kubernetes, master_group: k8s_master }
+    - { role: firewall_setup, master_group: k8s_master, slave_group: k8s_slave }
+    - { role: kubernetes, master_group: k8s_master, slave_group: k8s_slave }
