@@ -55,8 +55,9 @@ $ kubectl get nodes
 
 You should see a result like the following:
 ```
-NAME                    STATUS   ROLES    AGE   VERSION
-localhost.localdomain   Ready    master   49m   v1.19.0
+NAME        STATUS   ROLES    AGE     VERSION
+k8smaster   Ready    master   3m19s   v1.19.0
+k8sslave    Ready    <none>   2m45s   v1.19.0
 ```
 
 ## TODOs
