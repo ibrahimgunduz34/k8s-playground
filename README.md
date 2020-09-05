@@ -30,7 +30,7 @@ mkdir -p ~/.kube
 * Goto `vagrant` directory and copy the kubernetes configuration from the vm to the folder you created under your home directory.
 
 ```
-$ vagrant ssh k8s_master <<EOF
+$ vagrant ssh k8smaster <<EOF
 sudo cp /etc/kubernetes/admin.conf /tmp/kube-config.conf &&\
 sudo chown vagrant:vagrant /tmp/kube-config.conf
 EOF
@@ -40,7 +40,7 @@ $ scp \
 -o UserKnownHostsFile=/dev/null \
 -i .vagrant/machines/k8s_master/virtualbox/private_key \
 vagrant@192.168.20.10:/tmp/kube-config.conf ~/.kube/config &&\
- vagrant ssh k8s_master -c "rm /tmp/kube-config.conf"
+ vagrant ssh k8smaster -c "rm /tmp/kube-config.conf"
 ```
 
 * Update/ensure the configuration file ownership

@@ -1,5 +1,6 @@
 - hosts: all
   become: true
+  # accelerate: true
   gather_facts: false
   pre_tasks:
   - name: Install python2 for Ansible

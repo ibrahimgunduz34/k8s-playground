@@ -3,14 +3,17 @@
   stat:
     path: "{{ kube_home }}"
   register: kube_config_dir
-- name: Reset master node if it is already initialized
-  command: kubeadm reset -f
-  when: "kube_config_dir.stat.exists == true"
 - name: Remove the old user configuration
   file:
     path: '{{ kube_home }}'
     state: absent
   when: "kube_config_dir.stat.exists == true"
+- name: Check if the master node is already initialized
+  stat:
+    path: /etc/kubernetes/admin.conf
+  register: kube_admin_file
+- name: Reset master node if it is already initialized
+  command: kubeadm reset -f
+  when: "kube_admin_file.stat.exists == true"
 - name: Initialize master kubernetes node
   command: "kubeadm init --apiserver-advertise-address={{ ansible_host }} --pod-network-cidr 10.244.0.0/16"
-  when: "kubeadm_config_file.stat.exists == false"

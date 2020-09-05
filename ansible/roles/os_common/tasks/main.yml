@@ -12,3 +12,6 @@
 - name: Disable selinux permanently
   raw: sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
   when: "selinux_status.stdout != 'Disabled'"
+- name: Reboot the system
+  reboot:
+    reboot_timeout: 60

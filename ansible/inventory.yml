@@ -5,17 +5,24 @@ all:
         192.168.20.10:
       vars:
         ansible_user: vagrant
-        ansible_ssh_private_key_file: ../vagrant/.vagrant/machines/k8s_master/virtualbox/private_key
-    k8s_dev_slave:
+        ansible_ssh_private_key_file: ../vagrant/.vagrant/machines/k8smaster/virtualbox/private_key
+    k8s_dev_slave1:
       hosts:
         192.168.20.11:
       vars:
         ansible_user: vagrant
-        ansible_ssh_private_key_file: ../vagrant/.vagrant/machines/k8s_slave/virtualbox/private_key
+        ansible_ssh_private_key_file: ../vagrant/.vagrant/machines/k8sslave1/virtualbox/private_key
+    k8s_dev_slave2:
+      hosts:
+        192.168.20.12:
+      vars:
+        ansible_user: vagrant
+        ansible_ssh_private_key_file: ../vagrant/.vagrant/machines/k8sslave2/virtualbox/private_key
     k8s_master:
       children:
         k8s_dev_master:
     k8s_slave:
       children:
-        k8s_dev_slave:
+        k8s_dev_slave1:
+        k8s_dev_slave2:
 
