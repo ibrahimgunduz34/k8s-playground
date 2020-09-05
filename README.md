@@ -38,7 +38,7 @@ EOF
 $ scp \
 -o StrictHostKeyChecking=no \
 -o UserKnownHostsFile=/dev/null \
--i .vagrant/machines/k8s_master/virtualbox/private_key \
+-i .vagrant/machines/k8smaster/virtualbox/private_key \
 vagrant@192.168.20.10:/tmp/kube-config.conf ~/.kube/config &&\
  vagrant ssh k8smaster -c "rm /tmp/kube-config.conf"
 ```
@@ -59,6 +59,8 @@ NAME        STATUS   ROLES    AGE     VERSION
 k8smaster   Ready    master   3m19s   v1.19.0
 k8sslave    Ready    <none>   2m45s   v1.19.0
 ```
+**NOTE:** Keep it mind that nodes might be available (Ready) in several minutes.
+
 
 ## TODOs
 * ~~Use generic group names instead of environment specific group names for the roles regarding multi-node setup.~~
