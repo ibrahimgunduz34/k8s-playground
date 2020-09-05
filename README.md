@@ -77,6 +77,14 @@ localhost.localdomain   Ready    master   49m   v1.19.0
 
 
 ## Credits:
+Some docs for kubernetes installation
+
 * [https://www.tecmint.com/install-a-kubernetes-cluster-on-centos-8/](https://www.tecmint.com/install-a-kubernetes-cluster-on-centos-8/)
-* [https://stackoverflow.com/questions/59653331/kubernetes-centos-8-tc-command-missing-impact](https://stackoverflow.com/questions/59653331/kubernetes-centos-8-tc-command-missing-impact)
+
 * [https://phoenixnap.com/kb/how-to-install-kubernetes-on-centos](https://phoenixnap.com/kb/how-to-install-kubernetes-on-centos)
+
+* Solution for `tc command missing` issue <br />
+[https://stackoverflow.com/questions/59653331/kubernetes-centos-8-tc-command-missing-impact](https://stackoverflow.com/questions/59653331/kubernetes-centos-8-tc-command-missing-impact)
+
+* Solution for `misconfiguration: kubelet cgroup driver: "systemd" is different from docker cgroup driver: "cgroupfs"` issue <br />
+[https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/)
