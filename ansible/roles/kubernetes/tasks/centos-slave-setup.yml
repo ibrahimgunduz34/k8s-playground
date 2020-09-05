@@ -1,0 +1,5 @@
+---
+- name: Reset node
+  command: kubeadm reset -f
+- name: Register worker to the master node
+  command: "{{ hostvars[groups[master_group][0]]['k8s_master_join_command']['stdout'] }}"

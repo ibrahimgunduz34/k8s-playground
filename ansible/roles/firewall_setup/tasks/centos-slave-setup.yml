@@ -16,6 +16,8 @@
     - 30000-32767/tcp
 - name: Reload firewall configuration
   raw: "firewall-cmd --reload"
+- name: Enable Bridge Netfilter module
+  command: modprobe br_netfilter
 - name: update kernel settings
   sysctl:
     name: net.bridge.bridge-nf-call-iptables

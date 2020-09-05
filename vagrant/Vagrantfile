@@ -5,20 +5,35 @@ Vagrant.configure("2") do |config|
   config.vm.box = "centos/8"
   config.vbguest.auto_update = false
 
+  if Vagrant.has_plugin?("vagrant-cachier")
+    config.cache.auto_detect = false
+    config.cache.enable :yum
+  end
+
   config.vm.define "k8s_master" do |node|
     node.vm.network "private_network", ip: "192.168.20.10"
+    node.vm.hostname = "k8smaster"
     node.vm.provider "virtualbox" do |vm|
       vm.cpus = 2
       vm.memory = 2048
     end
+    node.vm.provision "shell", inline:  <<-SHELL
+      sudo echo "192.168.20.10 k8smaster" >> /etc/hosts
+      sudo echo "192.168.20.11 k8sslave" >> /etc/hosts
+    SHELL
   end
 
   config.vm.define "k8s_slave" do |node|
     node.vm.network "private_network", ip: "192.168.20.11"
+    node.vm.hostname = "k8sslave"
     node.vm.provider "virtualbox" do |vm|
       vm.cpus = 2
       vm.memory = 2048
     end
+    node.vm.provision "shell", inline:  <<-SHELL
+      sudo echo "192.168.20.10 k8smaster" >> /etc/hosts
+      sudo echo "192.168.20.11 k8sslave" >> /etc/hosts
+    SHELL
   end
 
   # config.vm.provision "shell", inline: <<-SHELL

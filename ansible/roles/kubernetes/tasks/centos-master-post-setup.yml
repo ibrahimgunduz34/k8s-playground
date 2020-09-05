@@ -1,14 +1,9 @@
 ---
-- name: Check if the user configuration exists
-  stat:
-    path: "{{ kube_home }}"
-  register: kube_config_dir
-- name: Create Kubernetes configuration folder if not exists
+- name: Create Kubernetes configuration folder
   file:
     path: '{{ kube_home }}'
     state: directory
     mode: 0755
-  when: "kube_config_dir.stat.exists == false"
 - name: Setup kubernetes client config
   copy:
     remote_src: yes
@@ -21,4 +16,6 @@
   register: kube_version_hash
 - name: setup kubernetes pod network
   command: "kubectl apply -f https://cloud.weave.works/k8s/net?k8s-version={{ kube_version_hash.stdout }}"
-
+- name: Store join command
+  command: kubeadm token create --print-join-command
+  register: k8s_master_join_command

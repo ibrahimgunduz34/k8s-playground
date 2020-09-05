@@ -3,7 +3,12 @@
   command: swapoff -a
 - name: Disable swap permanently
   raw: sed -i '/swap/d' /etc/fstab
+- name: Get selinux status
+  command: getenforce
+  register: selinux_status
 - name: Disable selinux in current session
   command: setenforce 0
+  when: "selinux_status.stdout != 'Disabled'"
 - name: Disable selinux permanently
   raw: sed -i --follow-symlinks 's/SELINUX=enforcing/SELINUX=disabled/g' /etc/sysconfig/selinux
+  when: "selinux_status.stdout != 'Disabled'"

@@ -88,3 +88,9 @@ Some docs for kubernetes installation
 
 * Solution for `misconfiguration: kubelet cgroup driver: "systemd" is different from docker cgroup driver: "cgroupfs"` issue <br />
 [https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/](https://kubernetes.io/docs/setup/production-environment/tools/kubeadm/troubleshooting-kubeadm/)
+
+* Solution to print join token after initialized master node <br />
+[https://stackoverflow.com/questions/40009831/cant-find-kubeadm-token-after-initializing-master](https://stackoverflow.com/questions/40009831/cant-find-kubeadm-token-after-initializing-master)
+
+* Solution for `unable to update cni config: No networks found in /etc/cni/net.d` issue <br />
+[https://stackoverflow.com/questions/43713509/kubernetes-v1-6-2-unable-to-update-cni-config-no-networks-found-in-etc-cni-net](https://stackoverflow.com/questions/43713509/kubernetes-v1-6-2-unable-to-update-cni-config-no-networks-found-in-etc-cni-net)

@@ -12,3 +12,6 @@
 - name: Load distribution based master post-setup
   include: "{{ ansible_distribution | lower }}-master-post-setup.yml"
   when: "master_group in group_names"
+- name: Load distribution based slave setup
+  include: "{{ ansible_distribution | lower }}-slave-setup.yml"
+  when: "slave_group in group_names"
