@@ -87,35 +87,36 @@ If master works and slave nodes looks NotReady <br/>
 ### Solution:
 * Check if all machine timezones are identical
 	* Goto `vagrant` folder and run the following command to print all node's datetime configuration
-```
-$ vagrant ssh k8smaster -c date &&\
-vagrant ssh k8sslave1 -c date  &&\
-vagrant ssh k8sslave2 -c date
-```
+	```
+	$ vagrant ssh k8smaster -c date &&\
+	vagrant ssh k8sslave1 -c date  &&\
+	vagrant ssh k8sslave2 -c date
+	```
 
 	* if you see any time differents, first, reboot the machines
-```
-$ vagrant reload
-```
+	```
+	$ vagrant reload
+	```
 
 	* Check the status of the nodes by `kubectl get nodes` command
-```
-$ kubectl get nodes
-```
+	```
+	$ kubectl get nodes
+	```
 
 	if you still don't see the following result in a few minutes, continue by the next steps below.
-```
-NAME        STATUS   ROLES    AGE   VERSION
-k8smaster   Ready    master   13m   v1.19.0
-k8sslave1   Ready    <none>   12m   v1.19.0
-k8sslave2   Ready    <none>   12m   v1.19.0
-```
+	```
+	NAME        STATUS   ROLES    AGE   VERSION
+	k8smaster   Ready    master   13m   v1.19.0
+	k8sslave1   Ready    <none>   12m   v1.19.0
+	k8sslave2   Ready    <none>   12m   v1.19.0
+	```
 
 	* Re-initialize the cluster by `reinitialize_cluster.yml` ansible playblook. Goto `ansible` folder and run the following command:
 ```
 $ ansible-playbook -i inventory.yml reinitialize_cluster.yml
 ```
 	* Goto `vagrant` folder and update the local kubernetes configuration file by the following command series in order to access the reinitialized cluster locally.
+
 ```
 $ vagrant ssh k8smaster <<EOF
 sudo cp /etc/kubernetes/admin.conf /tmp/kube-config.conf &&\
