@@ -15,7 +15,7 @@ Work in progress - It's a playground environment with k8s master/slave nodes. Yo
 ```shell
 $ vagrant up
 ```
-Vagrant would create two machines as master and slave with the following IP addresses
+Vagrant would create three machines as master and slave with the following IP addresses
 * 192.168.20.10 - Master node
 * 192.168.20.11	- Slave Node - 1
 * 192.168.20.12	- Slave Node - 2
