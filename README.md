@@ -85,7 +85,7 @@ k8sslave2   Ready      <none>   27m   v1.19.0
 ### Problem:
 If master works and slave nodes looks NotReady <br/>
 ### Solution:
-* Check if all machine timezones are identical
+* Check if all machine date/time configurations are identical
 	* Goto `vagrant` folder and run the following command to print all node's datetime configuration
 	```
 	$ vagrant ssh k8smaster -c date &&\
