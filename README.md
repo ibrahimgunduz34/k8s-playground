@@ -57,8 +57,8 @@ You should see a result like the following:
 ```
 NAME        STATUS     ROLES    AGE   VERSION
 k8smaster   Ready      master   28m   v1.19.0
-k8sslave1   NotReady   <none>   27m   v1.19.0
-k8sslave2   NotReady   <none>   27m   v1.19.0
+k8sslave1   Ready      <none>   27m   v1.19.0
+k8sslave2   Ready      <none>   27m   v1.19.0
 ```
 **NOTE:** Keep it mind that nodes may become available (Ready) in several minutes.
 
