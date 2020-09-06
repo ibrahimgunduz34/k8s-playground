@@ -112,9 +112,10 @@ If master works and slave nodes looks NotReady <br/>
 	```
 
 	* Re-initialize the cluster by `reinitialize_cluster.yml` ansible playblook. Goto `ansible` folder and run the following command:
-```
-$ ansible-playbook -i inventory.yml reinitialize_cluster.yml
-```
+	```
+	$ ansible-playbook -i inventory.yml reinitialize_cluster.yml
+	```
+
 	* Goto `vagrant` folder and update the local kubernetes configuration file by the following command series in order to access the reinitialized cluster locally.
 
 ```
