@@ -115,7 +115,7 @@ If master works and slave nodes looks NotReady <br/>
 	k8sslave2   Ready    <none>   12m   v1.19.0
 	```
 
-	* Re-initialize the cluster by `reinitialize_cluster.yml` ansible playblook. Goto `ansible` folder and run the following command:
+	* Re-initialize the cluster by `reinitialize_cluster.yml` ansible playblook. Goto `ansible` folder and run the following command: **IMPORTANT: This step will reset whole cluster. You may lose your data**
 	```
 	$ ansible-playbook -i inventory.yml reinitialize_cluster.yml
 	```
