@@ -49,7 +49,7 @@ vagrant@192.168.20.10:/tmp/kube-config.conf ~/.kube/config &&\
 $ chown -R $USER:$USER ~/.kube
 ```
 
-* Call `kubectl` command
+* Check the nodes' statuses by the following command:
 ```
 $ kubectl get nodes
 ```
@@ -72,6 +72,7 @@ k8sslave2   Ready      <none>   27m   v1.19.0
 	* ~~Update ansible scripts to make the required changes on the vm OS' and install common components to the slave too~~
 	* ~~Update firewall rules for the slave node by ansible~~
 	* ~~Register slave kubernetes node to the master~~
+* ~~Find a way to make the slave nodes works after VMs slept and woke up~~
 * Put an example project into repo that uses external services db, cache, queue broker etc. with kubernetes deployment configuration
 	* Deployment configuration should create multiple instance of the application container
 	* The application should start with delay
@@ -80,6 +81,51 @@ k8sslave2   Ready      <none>   27m   v1.19.0
 * Make the kubernetes works with multi-master and slave nodes.
 * Put some automated tests to simulate and test downtime scenarios of master or slave nodes.
 
+## Troubleshooting:
+### Problem:
+If master works and slave nodes looks NotReady <br/>
+### Solution:
+* Check if all machine timezones are identical
+	* Goto `vagrant` folder and run the following command to print all node's datetime configuration
+```
+$ vagrant ssh k8smaster -c date &&\
+vagrant ssh k8sslave1 -c date  &&\
+vagrant ssh k8sslave2 -c date
+```
+	* if you see any time differents, first, reboot the machines
+```
+$ vagrant reload
+```
+	* Check the status of the nodes by `kubectl get nodes` command
+```
+$ kubectl get nodes
+```
+	if you still don't see the following result in a few minutes, continue by the next steps below.
+```
+NAME        STATUS   ROLES    AGE   VERSION
+k8smaster   Ready    master   13m   v1.19.0
+k8sslave1   Ready    <none>   12m   v1.19.0
+k8sslave2   Ready    <none>   12m   v1.19.0
+```
+
+	* Re-initialize the cluster by `reinitialize_cluster.yml` ansible playblook. Goto `ansible` folder and run the following command:
+```
+$ ansible-playbook -i inventory.yml reinitialize_cluster.yml
+```
+	* Goto `vagrant` folder and update the local kubernetes configuration file by the following command series in order to access the reinitialized cluster locally.
+```
+$ vagrant ssh k8smaster <<EOF
+sudo cp /etc/kubernetes/admin.conf /tmp/kube-config.conf &&\
+sudo chown vagrant:vagrant /tmp/kube-config.conf
+EOF
+
+$ scp \
+-o StrictHostKeyChecking=no \
+-o UserKnownHostsFile=/dev/null \
+-i .vagrant/machines/k8smaster/virtualbox/private_key \
+vagrant@192.168.20.10:/tmp/kube-config.conf ~/.kube/config &&\
+ vagrant ssh k8smaster -c "rm /tmp/kube-config.conf"
+```
 
 ## Credits:
 Some docs for kubernetes installation

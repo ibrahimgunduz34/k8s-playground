@@ -1,0 +1,57 @@
+- hosts: k8s_master
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Check if any slave node exists
+      command: kubectl get node --selector='!node-role.kubernetes.io/master' --no-headers=true
+      register: k8s_slave_nodes
+
+    - name: Unregister slave nodes
+      raw: "kubectl get node --selector='!node-role.kubernetes.io/master' --no-headers=true | awk '{print $1}' | xargs kubectl delete node"
+      when: "k8s_slave_nodes.stdout != ''"
+
+    - name: Reset the master node
+      command: "kubeadm reset -f"
+
+    - name: Re-initialize the master node
+      command: kubeadm init --apiserver-advertise-address={{ ansible_host }} --pod-network-cidr 10.244.0.0/16
+
+    - name: Copy kubernetes configuration to the home folder
+      copy:
+        remote_src: yes
+        src: /etc/kubernetes/admin.conf
+        dest: '/root/.kube/config'
+
+    - name: Create kubernetes version hash
+      raw: kubectl version | base64 | tr -d '\n'
+      register: kube_version_hash
+
+    - name: Deploy network
+      command: "kubectl apply -f https://cloud.weave.works/k8s/net?k8s-version={{ kube_version_hash.stdout }}"
+
+    - name: Get join token command
+      command: kubeadm token create --print-join-command
+      register: k8s_join_cmd
+
+- hosts: k8s_slave
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Reset the slave nodes
+      command: "kubeadm reset -f"
+
+    - name: Re-register slave nodes
+      command: "{{ hostvars[groups['k8s_master'][0]]['k8s_join_cmd']['stdout'] }}"
+
+# First try:
+#   - unregister slave nodes from master
+#   - reset kubernetes on slave nodes
+#   - re-register the nodes by the register command that printed on master node
+#    FAILED
+# Second try:
+#   - unregister slave nodes from master
+#   - reset kubernetes on slave nodes
+#   - restart kubelet service on slave nodes
+#    FAILED
+# Third try:
+#   - Re-initialize master node besides the tasks above
