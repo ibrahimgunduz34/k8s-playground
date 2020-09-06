@@ -92,14 +92,17 @@ $ vagrant ssh k8smaster -c date &&\
 vagrant ssh k8sslave1 -c date  &&\
 vagrant ssh k8sslave2 -c date
 ```
+
 	* if you see any time differents, first, reboot the machines
 ```
 $ vagrant reload
 ```
+
 	* Check the status of the nodes by `kubectl get nodes` command
 ```
 $ kubectl get nodes
 ```
+
 	if you still don't see the following result in a few minutes, continue by the next steps below.
 ```
 NAME        STATUS   ROLES    AGE   VERSION
