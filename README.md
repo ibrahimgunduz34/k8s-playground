@@ -6,6 +6,10 @@ Work in progress - It's a playground environment with k8s master/slave nodes. Yo
 * Vagrant
 * Ansible
 
+## System Requirements:
+* 6 GB Free memory space
+* 8 GB Free disk space
+
 ## Setup
 * Goto `vagrant` folder and start the machines by the following command
 ```shell
