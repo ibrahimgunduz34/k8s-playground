@@ -1,0 +1,9 @@
+#!/bin/bash
+ROOT_DIR=$(dirname $(dirname $(readlink -f $0)))
+VAGRANT_DIR="$ROOT_DIR/vagrant"
+ANSIBLE_DIR="$ROOT_DIR/ansible"
+
+cd $VAGRANT_DIR &&\
+vagrant up &&\
+cd $ANSIBLE_DIR &&\
+ansible-playbook -i inventory.yml provision-dev.yml

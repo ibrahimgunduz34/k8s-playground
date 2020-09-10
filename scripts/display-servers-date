@@ -1,0 +1,27 @@
+#!/bin/bash
+ROOT_DIR=$(dirname $(dirname $(readlink -f $0)))
+VAGRANT_DIR="$ROOT_DIR/vagrant"
+
+echo "Server: Master " &&\
+ssh \
+-o LogLevel=ERROR \
+-o StrictHostKeyChecking=no \
+-o UserKnownHostsFile=/dev/null \
+-i "$VAGRANT_DIR/.vagrant/machines/k8smaster/virtualbox/private_key" \
+vagrant@192.168.20.10 date &&\
+
+echo "Server: Slave-1 " &&\
+ssh \
+-o LogLevel=ERROR \
+-o StrictHostKeyChecking=no \
+-o UserKnownHostsFile=/dev/null \
+-i "$VAGRANT_DIR/.vagrant/machines/k8sslave1/virtualbox/private_key" \
+vagrant@192.168.20.11 date &&\
+
+echo "Server: Slave-2 " &&\
+ssh \
+-o LogLevel=ERROR \
+-o StrictHostKeyChecking=no \
+-o UserKnownHostsFile=/dev/null \
+-i "$VAGRANT_DIR/.vagrant/machines/k8sslave2/virtualbox/private_key" \
+vagrant@192.168.20.12 date

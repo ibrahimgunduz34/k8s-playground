@@ -11,46 +11,23 @@ Work in progress - It's a playground environment with k8s master/slave nodes. Yo
 * 8 GB Free disk space
 
 ## Setup
-* Goto `vagrant` folder and start the machines by the following command
-```shell
-$ vagrant up
+* Run `create-cluster` script under the `scripts` folder in order to create the virtual machines and a Kubernetes cluster on them.
 ```
-Vagrant would create three machines as master and slave with the following IP addresses
+$ ./scripts/create-cluster
+```
+
+The script would create 3 virtual machines with the following IP addresses:
+
 * 192.168.20.10 - Master node
 * 192.168.20.11	- Slave Node - 1
 * 192.168.20.12	- Slave Node - 2
 
-* Goto `ansible` folder, run the following command in order to install Kubernetes and all the required packages.
-```shell
-$ ansible-playbook -i inventory.yml provision-dev.yml
-```
 
 # How To Access Kubernetes
-* Create `.kube` directory under your user home directory
 
+* Run `download-k8s-config` script under `scripts` folder.
 ```
-mkdir -p ~/.kube
-```
-
-* Goto `vagrant` directory and copy the kubernetes configuration from the vm to the folder you created under your home directory.
-
-```
-$ vagrant ssh k8smaster <<EOF
-sudo cp /etc/kubernetes/admin.conf /tmp/kube-config.conf &&\
-sudo chown vagrant:vagrant /tmp/kube-config.conf
-EOF
-
-$ scp \
--o StrictHostKeyChecking=no \
--o UserKnownHostsFile=/dev/null \
--i .vagrant/machines/k8smaster/virtualbox/private_key \
-vagrant@192.168.20.10:/tmp/kube-config.conf ~/.kube/config &&\
- vagrant ssh k8smaster -c "rm /tmp/kube-config.conf"
-```
-
-* Update/ensure the configuration file ownership
-```
-$ chown -R $USER:$USER ~/.kube
+$ ./scripts/download-k8s-config
 ```
 
 * Check the nodes' statuses by the following command:
@@ -90,14 +67,22 @@ k8sslave2   Ready      <none>   27m   v1.19.0
 If master works and slave nodes looks NotReady <br/>
 ### Solution:
 * Check if all machine date/time configurations are identical
-	* Goto `vagrant` folder and run the following command to print all node's datetime configuration
+	* Run the following command to see the date configuration of all servers
 	```
-	$ vagrant ssh k8smaster -c date &&\
-	vagrant ssh k8sslave1 -c date  &&\
-	vagrant ssh k8sslave2 -c date
+	$ ./scripts/display-servers-date
 	```
 
-	* if you see any time differents, first, reboot the machines
+	* You should see a result like the following:
+	```
+	Server: Master
+	Thu Sep 10 20:14:36 +03 2020
+	Server: Slave-1
+	Thu Sep 10 20:14:36 +03 2020
+	Server: Slave-2
+	Thu Sep 10 17:14:37 UTC 2020
+	```
+
+	* if you see any time difference bigger than a few seconds, first, reboot the machines
 	```
 	$ vagrant reload
 	```
@@ -115,26 +100,15 @@ If master works and slave nodes looks NotReady <br/>
 	k8sslave2   Ready    <none>   12m   v1.19.0
 	```
 
-	* Re-initialize the cluster by `reinitialize_cluster.yml` ansible playblook. Goto `ansible` folder and run the following command: **IMPORTANT: This step will reset whole cluster. You may lose your data**
+	* Re-initialize the cluster by `reinitialize-cluster` script under scripts folder.  **IMPORTANT: This step will reset whole cluster. You may lose your data**
 	```
-	$ ansible-playbook -i inventory.yml reinitialize_cluster.yml
+	$ ./scripts/reinitialize-cluster
 	```
 
-	* Goto `vagrant` folder and update the local kubernetes configuration file by the following command series in order to access the reinitialized cluster locally.
-
-```
-$ vagrant ssh k8smaster <<EOF
-sudo cp /etc/kubernetes/admin.conf /tmp/kube-config.conf &&\
-sudo chown vagrant:vagrant /tmp/kube-config.conf
-EOF
-
-$ scp \
--o StrictHostKeyChecking=no \
--o UserKnownHostsFile=/dev/null \
--i .vagrant/machines/k8smaster/virtualbox/private_key \
-vagrant@192.168.20.10:/tmp/kube-config.conf ~/.kube/config &&\
- vagrant ssh k8smaster -c "rm /tmp/kube-config.conf"
-```
+	* Re-download the latest kubernetes configuration after re-initialized the kubernetes cluster.
+	```
+	$ ./scripts/download-k8s-config
+	```
 
 ## Credits:
 Some docs for kubernetes installation

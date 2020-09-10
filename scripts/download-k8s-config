@@ -1,0 +1,25 @@
+#!/bin/bash
+ROOT_DIR=$(dirname $(dirname $(readlink -f $0)))
+VAGRANT_DIR="$ROOT_DIR/vagrant"
+
+mkdir -p ~/.kube
+
+ssh \
+-o LogLevel=ERROR \
+-o StrictHostKeyChecking=no \
+-o UserKnownHostsFile=/dev/null \
+-i "$VAGRANT_DIR/.vagrant/machines/k8smaster/virtualbox/private_key" \
+vagrant@192.168.20.10 \
+<<EOF
+sudo cp /etc/kubernetes/admin.conf /tmp/kube-config.conf &&\
+sudo chown vagrant:vagrant /tmp/kube-config.conf
+EOF
+
+scp \
+-o LogLevel=ERROR \
+-o StrictHostKeyChecking=no \
+-o UserKnownHostsFile=/dev/null \
+-i "$VAGRANT_DIR/.vagrant/machines/k8smaster/virtualbox/private_key" \
+vagrant@192.168.20.10:/tmp/kube-config.conf ~/.kube/config
+
+chown -R $USER:$USER ~/.kube

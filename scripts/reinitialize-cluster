@@ -1,0 +1,6 @@
+#!/bin/bash
+ROOT_DIR=$(dirname $(dirname $(readlink -f $0)))
+ANSIBLE_DIR="$ROOT_DIR/ansible"
+
+cd $ANSIBLE_DIR &&\
+ansible-playbook -i inventory.yml reinitialize_cluster.yml
